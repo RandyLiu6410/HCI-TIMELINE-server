@@ -11,7 +11,8 @@ const userSchema = new Schema({
             lastSeen: {type: Number, require: true}
         }
     ],
-    bookmarks: {type: Number, require: true}
+    customtags: {type: String, require: true},
+    history: {type: [String], require: true}
     },
     { timestamps: true }
   );
