@@ -125,14 +125,21 @@ router.route('/customtags').get((req, res) => {
 router.route('/history').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        User.update(
-            { _id: result._id }, 
-            { $push: { history: req.query.url } },
-            () => {
-                res.status(200);
-                res.json('History is added.');
-            }
-        );
+        if(!result.history.includes(req.query.url))
+        {
+            User.update(
+                { _id: result._id }, 
+                { $push: { history: req.query.url } },
+                () => {
+                    res.status(200);
+                    res.json('History is added.');
+                }
+            );
+        }
+        else{
+            res.status(200);
+            res.json('History is added.');
+        }
     })
     .catch((err) => {
         res.status(400);
