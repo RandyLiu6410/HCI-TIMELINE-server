@@ -123,7 +123,6 @@ router.route('/customtags').get((req, res) => {
 });
 
 router.route('/history').post((req, res) => {
-    console.log('add history');
     User.findOne({username: req.query.username})
     .then((result) => {
         if(!result.history.includes(req.query.url))
