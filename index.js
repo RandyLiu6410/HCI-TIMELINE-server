@@ -19,8 +19,10 @@ connection.once('open', () => {
 })
 
 const newsRouter = require('./routes/news');
+const userRouter = require('./routes/user');
 
 app.use('/news', newsRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
