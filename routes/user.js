@@ -69,7 +69,10 @@ router.route('/followtags').post((req, res) => {
         {
             User.update(
                 { _id: result._id }, 
-                { $push: { followtags: req.query.tag } },
+                { $push: { followtags: {
+                    tag: req.query.tag,
+                    followtime: new Date()
+                } } },
                 () => {
                     res.status(200);
                     res.json('Tag is added.');
