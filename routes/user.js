@@ -65,14 +65,21 @@ router.route('/login').post((req, res) => {
 router.route('/followtags').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        User.update(
-            { _id: result._id }, 
-            { $push: { followtags: req.query.tag } },
-            () => {
-                res.status(200);
-                res.json('Tag is added.');
-            }
-        );
+        if(!result.followtags.includes(req.query.tag))
+        {
+            User.update(
+                { _id: result._id }, 
+                { $push: { followtags: req.query.tag } },
+                () => {
+                    res.status(200);
+                    res.json('Tag is added.');
+                }
+            );
+        }
+        else{
+            res.status(200);
+            res.json('Tag is added.');
+        }
     })
     .catch((err) => {
         res.status(400);
@@ -95,14 +102,21 @@ router.route('/followtags').get((req, res) => {
 router.route('/customtags').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        User.update(
-            { _id: result._id }, 
-            { $push: { customtags: req.query.tag } },
-            () => {
-                res.status(200);
-                res.json('Tag is added.');
-            }
-        );
+        if(!result.customtags.includes(req.query.tag))
+        {
+            User.update(
+                { _id: result._id }, 
+                { $push: { customtags: req.query.tag } },
+                () => {
+                    res.status(200);
+                    res.json('Tag is added.');
+                }
+            );
+        }
+        else{
+            res.status(200);
+            res.json('Tag is added.');
+        }
     })
     .catch((err) => {
         res.status(400);
