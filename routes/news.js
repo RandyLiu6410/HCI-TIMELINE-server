@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(process.env.NEWS_API_KEYS);
 let News = require('../models/news.model');
+let User = require('../models/user.model');
 
 const keywords = ['Biden', 'Trump', 'COVID-19', 'Vaccines', 'Senate', 'Coronavirus', 'Trade Deal', 'Thai protest',
                   'Protester', 'Supreme Court', 'Top Court', 'Arms Sale', 'Marine', 'Pfizer', 'Quarantine', 'Person of The Year',
@@ -78,6 +79,20 @@ router.route('/tag/').get((req, res) => {
     News.find({ tags: { $in: req.query.tag }}).sort({'publishedAt': req.query.sort}).skip(parseInt(req.query.startIndex)).limit(parseInt(req.query.limit))
     .then(news => res.json(news))
     .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/following/').get((req, res) => {
+    User.findOne({username: req.query.username})
+    .then((result) => {
+        const tags = result.followtags.map(t => t.tag);
+        News.find({ tags: { $in: tags }}).sort({'publishedAt': req.query.sort}).skip(parseInt(req.query.startIndex)).limit(parseInt(req.query.limit))
+        .then(news => res.json(news))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch((err) => {
+        res.status(400);
+        res.json(err);
+    })
 });
 
 router.route('/keywords/').get((req, res) => {
