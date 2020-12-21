@@ -6,18 +6,201 @@
 	},
 	"item": [
 		{
+			"name": "NewsAPI",
+			"item": [
+				{
+					"name": "Top headlines in country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{newsapiurl}}/top-headlines?country=us&apiKey={{newsapikey}}",
+							"protocol": "https",
+							"host": [
+								"{{newsapiurl}}"
+							],
+							"path": [
+								"top-headlines"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "us"
+								},
+								{
+									"key": "apiKey",
+									"value": "{{newsapikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top headlines of source",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{newsapiurl}}/top-headlines?sources=bbc-news&apiKey={{newsapikey}}",
+							"protocol": "https",
+							"host": [
+								"{{newsapiurl}}"
+							],
+							"path": [
+								"top-headlines"
+							],
+							"query": [
+								{
+									"key": "sources",
+									"value": "bbc-news"
+								},
+								{
+									"key": "apiKey",
+									"value": "{{newsapikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top headlines in country of category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{newsapiurl}}/top-headlines?country=de&category=business&apiKey={{newsapikey}}",
+							"protocol": "https",
+							"host": [
+								"{{newsapiurl}}"
+							],
+							"path": [
+								"top-headlines"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "de"
+								},
+								{
+									"key": "category",
+									"value": "business"
+								},
+								{
+									"key": "apiKey",
+									"value": "{{newsapikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top headlines of keywords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{newsapiurl}}/top-headlines?q=trump&apiKey={{newsapikey}}",
+							"protocol": "https",
+							"host": [
+								"{{newsapiurl}}"
+							],
+							"path": [
+								"top-headlines"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "trump"
+								},
+								{
+									"key": "apiKey",
+									"value": "{{newsapikey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All articles about keywords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{newsapiurl}}/everything?apiKey={{newsapikey}}&sortBy=publishedAt&domains=https://gizmodo.com/trump-biden-won-but-i-concede-nothing-1845681118",
+							"protocol": "https",
+							"host": [
+								"{{newsapiurl}}"
+							],
+							"path": [
+								"everything"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Election",
+									"disabled": true
+								},
+								{
+									"key": "apiKey",
+									"value": "{{newsapikey}}"
+								},
+								{
+									"key": "sortBy",
+									"value": "publishedAt"
+								},
+								{
+									"key": "qInTitle",
+									"value": "武統學者酸2024國民黨慘敗　江啟臣：他不了解台灣",
+									"disabled": true
+								},
+								{
+									"key": "excludeDomains",
+									"value": "Bnext.com.tw",
+									"disabled": true
+								},
+								{
+									"key": "domains",
+									"value": "https://gizmodo.com/trump-biden-won-but-i-concede-nothing-1845681118"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "GET all news",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}/{{newsRoute}}",
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}?sort=descending&startIndex=0&limit=20",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"{{newsRoute}}"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "descending",
+							"description": "ascending or descending"
+						},
+						{
+							"key": "startIndex",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
 					]
 				}
 			},
@@ -28,23 +211,22 @@
 			"request": {
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"source\": \"Newsweek\",\n    \"title\": \"Obama Says Biden's Margin of Victory Over Trump Is Bigger than Trump's Margin Over Clinton in 2016\",\n    \"context\": [\"Former President Barack Obama has stated that President-elect Joe Biden's electoral victory over President Donald Trump is greater than Trump's 2016 victory over then-Democratic presidential nominee Hillary Clinton.\",\"In a clip of a forthcoming interview with Gayle King of CBS Sunday Morning, Obama mentioned how, on Election Night 2016, he called Trump at 2:30 in the morning to congratulate him on his victory.\",\"\\\"His margin of victory over Hillary Clinton wasn't greater than Joe Biden's margin over him,\\\" Obama told King, later adding, \\\"Joe Biden will be the next president of the United States. Kamala Harris will be the next vice president.\\\"\",\"Obama's declaration of Biden's margin of victory, and his assertion that Biden and Harris will lead the upcoming administration contradict Trump and his administration's repeated assertions that Trump won the election and will serve out a second term, a claim repeated this week by White House Press Secretary Kayleigh McEnany and Secretary of State Mike Pompeo.\"],\n    \"postTime\": 1607181597152,\n    \"country\": \"US\",\n    \"tags\": [\"US Election\", \"US\", \"Biden\", \"Trump\"],\n    \"type\": \"politics\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{schema}}://{{host}}/{{newsRoute}}",
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}/addtag",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"{{newsRoute}}"
+						"{{newsRoute}}",
+						"addtag"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Taiwan",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -56,7 +238,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}/{{newsRoute}}?id=5fcba5f8d16f6213bbb2e1e6",
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}?url=https://gizmodo.com/trump-biden-won-but-i-concede-nothing-1845681118",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -66,8 +248,8 @@
 					],
 					"query": [
 						{
-							"key": "id",
-							"value": "5fcba5f8d16f6213bbb2e1e6"
+							"key": "url",
+							"value": "https://gizmodo.com/trump-biden-won-but-i-concede-nothing-1845681118"
 						}
 					]
 				}
@@ -130,7 +312,233 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET by tag",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}/tag?tag=Stay-at-home&sort=descending&startIndex=0&limit=20",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{newsRoute}}",
+						"tag"
+					],
+					"query": [
+						{
+							"key": "tag",
+							"value": "Stay-at-home"
+						},
+						{
+							"key": "sort",
+							"value": "descending"
+						},
+						{
+							"key": "startIndex",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET by keyword",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}/keywords?keyWord=US&sort=descending&startIndex=0&limit=20",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{newsRoute}}",
+						"keywords"
+					],
+					"query": [
+						{
+							"key": "keyWord",
+							"value": "US"
+						},
+						{
+							"key": "sort",
+							"value": "descending"
+						},
+						{
+							"key": "startIndex",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{userRoute}}/?username=admin&password=admin",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{userRoute}}",
+						""
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{userRoute}}/login?username=admin&password=admin",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{userRoute}}",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a history",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{userRoute}}/history?username=admin&url=https://www.reuters.com/article/taiwan-security-idUSKBN28L0IL",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{userRoute}}",
+						"history"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "url",
+							"value": "https://www.reuters.com/article/taiwan-security-idUSKBN28L0IL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a followtag",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{userRoute}}/followtags?username=admin&tag=China",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{userRoute}}",
+						"followtags"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "tag",
+							"value": "China"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET following news",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}/following?sort=descending&startIndex=0&limit=20&username=admin",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{newsRoute}}",
+						"following"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "descending"
+						},
+						{
+							"key": "startIndex",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "username",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
