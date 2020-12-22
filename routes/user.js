@@ -103,6 +103,18 @@ router.route('/followtags').get((req, res) => {
     })
 });
 
+router.route('/checkfollow').get((req, res) => {
+    User.findOne({username: req.query.username})
+    .then((result) => {
+        res.status(200);
+        res.json(result.followtags.filter(follow => follow.tag === req.query.tag).length > 0);
+    })
+    .catch((err) => {
+        res.status(400);
+        res.json(err);
+    })
+});
+
 router.route('/customtags').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
