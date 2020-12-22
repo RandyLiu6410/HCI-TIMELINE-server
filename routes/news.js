@@ -9,7 +9,7 @@ const keywords = ['Biden', 'Trump', 'COVID-19', 'Vaccines', 'Senate', 'Coronavir
                   'Protester', 'Supreme Court', 'Top Court', 'Arms Sale', 'Marine', 'Pfizer', 'Quarantine', 'Person of The Year',
                   'North Korea', 'Russia', 'China', 'F-16 Pilot', 'Google', 'Facebook', 'Oracle', 'Chinese Spy',
                   'Andrew Yang', 'Cuba', 'Stay-at-home', 'Prince William', 'Hong Kong', 'Russian Spy', 'Texas',
-                  'White House', 'Mexico', 'Covid Shaming'];
+                  'White House', 'Mexico', 'Covid Shaming', 'Taiwan'];
 
 // router.route('/').post((req, res) => {
 //   const newNews = new News(req.body);
