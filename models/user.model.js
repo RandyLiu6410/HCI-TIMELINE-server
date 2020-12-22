@@ -13,7 +13,9 @@ const userSchema = new Schema({
         tag: {type: String, require: true},
         followtime: {type: String, require: true}
     }],
-    history: {type: [String], require: true}
+    history: {type: [String], require: true},
+    tagsearchhistory: {type: [String], require: true},
+    keywordsearchhistory: {type: [String], require: true}
     },
     { timestamps: true }
   );
