@@ -81,6 +81,10 @@ router.route('/tag/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/taglist/').get((req, res) => {
+    res.json(keywords);
+});
+
 router.route('/following/').get((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
