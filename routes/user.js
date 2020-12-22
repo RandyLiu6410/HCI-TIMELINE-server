@@ -105,11 +105,14 @@ router.route('/followtags').get((req, res) => {
 router.route('/customtags').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        if(!result.customtags.includes(req.query.tag))
+        if(result.customtags.filter(tag => tag.tag === req.query.tag).length === 0)
         {
             User.update(
                 { _id: result._id }, 
-                { $push: { customtags: req.query.tag } },
+                { $push: { customtags: {
+                    tag: req.query.tag,
+                    followtime: new Date()
+                } } },
                 () => {
                     res.status(200);
                     res.json('Tag is added.');
