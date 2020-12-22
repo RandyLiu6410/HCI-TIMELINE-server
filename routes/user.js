@@ -65,7 +65,7 @@ router.route('/login').post((req, res) => {
 router.route('/followtags').post((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        if(!result.followtags.includes(req.query.tag))
+        if(result.followtags.filter(tag => tag.tag === req.query.tag).length === 0)
         {
             User.update(
                 { _id: result._id }, 
@@ -81,7 +81,7 @@ router.route('/followtags').post((req, res) => {
         }
         else{
             res.status(200);
-            res.json('Tag is added.');
+            res.json('Tag exists.');
         }
     })
     .catch((err) => {
