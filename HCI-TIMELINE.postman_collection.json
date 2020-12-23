@@ -504,12 +504,41 @@
 			"response": []
 		},
 		{
+			"name": "DELETE a followtag",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{host}}/{{userRoute}}/followtags?username=admin&tag=China",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{userRoute}}",
+						"followtags"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "tag",
+							"value": "China"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET following news",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{schema}}://{{host}}/{{newsRoute}}/following?sort=descending&startIndex=0&limit=20&username=admin",
+					"raw": "{{schema}}://{{host}}/{{newsRoute}}/following?sort=ascending&startIndex=0&limit=20&username=admin",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{host}}"
@@ -521,7 +550,7 @@
 					"query": [
 						{
 							"key": "sort",
-							"value": "descending"
+							"value": "ascending"
 						},
 						{
 							"key": "startIndex",
