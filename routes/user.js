@@ -103,6 +103,33 @@ router.route('/followtags').get((req, res) => {
     })
 });
 
+router.route('/followtags').delete((req, res) => {
+    User.findOne({username: req.query.username})
+    .then((result) => {
+        if(result.followtags.filter(tag => tag.tag === req.query.tag).length === 0) {
+            res.status(400);
+            res.json('Tag does not exist.');
+        }
+        else {
+            User.update(
+                { _id: result._id }, 
+                { $pullAll: { followtags: {
+                    tag: req.query.tag,
+                } } },
+                // { $pullAll: { uid: [result._id] } },
+                () => {
+                    // res.status(200);
+                    // res.json('Tag is added.');
+                }
+            );
+        }
+    })
+    .catch((err) => {
+        res.status(400);
+        res.json(err);
+    })
+});
+
 router.route('/checkfollow').get((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
