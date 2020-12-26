@@ -113,13 +113,13 @@ router.route('/followtags').delete((req, res) => {
         else {
             User.update(
                 { _id: result._id }, 
-                { $pullAll: { followtags: {
+                { $pull: { followtags: {
                     tag: req.query.tag,
                 } } },
-                // { $pullAll: { uid: [result._id] } },
+                {safe: true, multi: true},
                 () => {
-                    // res.status(200);
-                    // res.json('Tag is added.');
+                    res.status(200);
+                    res.json('Tag is deleted.');
                 }
             );
         }
