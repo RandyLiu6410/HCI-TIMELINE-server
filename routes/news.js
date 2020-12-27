@@ -20,45 +20,111 @@ const keywords = ['Biden', 'Trump', 'COVID-19', 'Vaccines', 'Senate', 'Coronavir
 // });
 
 router.route('/addtag/').post((req, res) => {
-    keywords.map(async k => {
-        await newsapi.v2.everything({
-            q: k,
-            pageSize: 100
+    const initializedNews = (article, tag) => {
+        return new Promise((resolve, reject) => {
+            const newNews = new News({
+                ...article,
+                tags: [tag],
+                source: article.source.name
+            });
+
+            newNews.save()
+            .then(() => resolve('News added!'))
+            .catch(err => reject('Error: ' + err));
         })
-        .then(result => {
-            result.articles.map(async a => {
-                await News.findOne({url: a.url}).exec().then(
-                    r => {
-                        if(!r)
+    }
+
+    const appendTag = (result, tag) => {
+        return new Promise((resolve, reject) => {
+            News.update(
+                { _id: result._id }, 
+                { $push: { tags: tag } },
+                () => resolve('News updated!')
+            );
+        })
+    }
+
+    const handleResult = async (articles, tag) => {
+        return Promise.all(articles.map(async article => {
+            await News.findOne({url: article.url}).exec().then(
+                result => {
+                    if(!result)
+                    {
+                        initializedNews(article, tag);
+                    }
+                    else{
+                        if(!result.tags.includes(tag))
                         {
-                            const newNews = new News({
-                                ...a,
-                                tags: [k],
-                                source: a.source.name
-                            });
-    
-                            newNews.save()
-                            .then(() => console.log('News added!'))
-                            .catch(err => console.log('Error: ' + err));
-                        }
-                        else{
-                            if(!r.tags.includes(k))
-                            {
-                                News.update(
-                                    { _id: r._id }, 
-                                    { $push: { tags: k } },
-                                    () => console.log('News updated!')
-                                );
-                            }
+                            appendTag(result, tag)
                         }
                     }
-                )
-                .catch((err) => console.log(err))
+                }
+            )
+            .catch((err) => console.log(err))
+        }))
+    }
+
+    const getData = async () => {
+        return Promise.all(keywords.map(async tag => {
+            await newsapi.v2.everything({
+                q: tag,
+                pageSize: 100,
+                excludeDomains: 'reuters.com',
+                language: 'en'
             })
-        })
+            .then(result => {
+                handleResult(result.articles, tag);
+            })
+        }))
+    }
+
+    getData().then(result => console.log(result));
+
+    // keywords.map(async k => {
+    //     await newsapi.v2.everything({
+    //         q: k,
+    //         pageSize: 100,
+    //         excludeDomains: 'reuters.com',
+    //         language: 'en'
+    //     })
+    //     .then(result => {
+    //         result.articles.map(async a => {
+    //             await News.findOne({url: a.url}).exec().then(
+    //                 r => {
+    //                     if(!r)
+    //                     {
+    //                         const newNews = new News({
+    //                             ...a,
+    //                             tags: [k],
+    //                             source: a.source.name
+    //                         });
+    
+    //                         newNews.save()
+    //                         .then(() => console.log('News added!'))
+    //                         .catch(err => console.log('Error: ' + err));
+
+    //                         setTimeout(() => console.log(''), 1000);
+    //                     }
+    //                     else{
+    //                         if(!r.tags.includes(k))
+    //                         {
+    //                             News.update(
+    //                                 { _id: r._id }, 
+    //                                 { $push: { tags: k } },
+    //                                 () => console.log('News updated!')
+    //                             );
+                                
+    //                             setTimeout(() => console.log(''), 1000);
+    //                         }
+    //                     }
+    //                 }
+    //             )
+    //             .catch((err) => console.log(err))
+    //         })
+    //     })
         // .then(() => res.json('News added!'))
         // .catch(err => res.status(400).json('Error: ' + err))
-    })
+    // })
 });
 
 router.route('/').get((req, res) => {
