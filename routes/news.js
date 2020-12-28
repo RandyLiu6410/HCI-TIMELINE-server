@@ -21,17 +21,13 @@ const keywords = ['Biden', 'Trump', 'COVID-19', 'Vaccines', 'Senate', 'Coronavir
 
 router.route('/addtag/').post((req, res) => {
     const initializedNews = (article, tag) => {
-        return new Promise((resolve, reject) => {
-            const newNews = new News({
-                ...article,
-                tags: [tag],
-                source: article.source.name
-            });
+        const newNews = new News({
+            ...article,
+            tags: [tag],
+            source: article.source.name
+        });
 
-            newNews.save()
-            .then(() => resolve('News added!'))
-            .catch(err => reject('Error: ' + err));
-        })
+        return newNews.save()
     }
 
     const appendTag = (result, tag) => {
@@ -45,40 +41,52 @@ router.route('/addtag/').post((req, res) => {
     }
 
     const handleResult = async (articles, tag) => {
+        console.log(`handling ${tag}`);
+
         return Promise.all(articles.map(async article => {
-            await News.findOne({url: article.url}).exec().then(
-                result => {
-                    if(!result)
-                    {
-                        initializedNews(article, tag);
-                    }
-                    else{
-                        if(!result.tags.includes(tag))
-                        {
-                            appendTag(result, tag)
-                        }
-                    }
-                }
-            )
-            .catch((err) => console.log(err))
-        }))
+            const result = await News.findOne({url: article.url}).exec();
+            console.log(`finding ${article.url}`);
+
+            if(!result)
+            {
+                return initializedNews(article, tag);
+            }
+            else if(!result.tags.includes(tag)){
+                return appendTag(result, tag)
+            }
+        })).then(() => console.log(`handled ${tag}`))
     }
 
     const getData = async () => {
-        return Promise.all(keywords.map(async tag => {
-            await newsapi.v2.everything({
+        // return Promise.all(keywords.map(async tag => {
+        //     const result = await newsapi.v2.everything({
+        //         q: tag,
+        //         pageSize: 100,
+        //         excludeDomains: 'reuters.com',
+        //         language: 'en'
+        //     })
+        //     // .then(result => {
+        //     //     return handleResult(result.articles, tag)
+        //     // })
+
+        //     return handleResult(result.articles, tag)
+        // }))
+        // .then(() => console.log('done'))
+
+        for (let tag of keywords)
+        {
+            const result = await newsapi.v2.everything({
                 q: tag,
                 pageSize: 100,
                 excludeDomains: 'reuters.com',
                 language: 'en'
             })
-            .then(result => {
-                handleResult(result.articles, tag);
-            })
-        }))
+
+            await handleResult(result.articles, tag)
+        }
     }
 
-    getData().then(result => console.log(result));
+    getData().then(() => console.log('done')).then(() => res.json('done'));
 
     // keywords.map(async k => {
     //     await newsapi.v2.everything({
