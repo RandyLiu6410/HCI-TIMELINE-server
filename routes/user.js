@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const e = require('express');
-const fetch = require("node-fetch");
 let User = require('../models/user.model');
 
 router.route('/').post((req, res) => {

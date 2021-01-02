@@ -9,7 +9,9 @@ const keywords = ['Biden', 'Trump', 'COVID-19', 'Vaccines', 'Senate', 'Coronavir
                   'Protester', 'Supreme Court', 'Top Court', 'Arms Sale', 'Marine', 'Pfizer', 'Quarantine', 'Person of The Year',
                   'North Korea', 'Russia', 'China', 'F-16 Pilot', 'Google', 'Facebook', 'Oracle', 'Chinese Spy',
                   'Andrew Yang', 'Cuba', 'Stay-at-home', 'Prince William', 'Hong Kong', 'Russian Spy', 'Texas',
-                  'White House', 'Mexico', 'Covid Shaming', 'Taiwan'];
+                  'White House', 'Mexico', 'Covid Shaming', 'Taiwan', 'McConnell', 'Stimulus Checks', 'Highly Infectious Coronavirus Variant', 
+                  'Vaccine Distribution', 'Breonna Taylor', 'EMT Shot', 'Wonder Woman 1984', 'DC', 'Marvel', 'IMDB', 'JoJo\'s Bizarre Adventure', 
+                  'HK Protest', 'Cyberpunk 2077', 'TSMC', 'EVA Air', 'President Tsai'];
 
 // router.route('/').post((req, res) => {
 //   const newNews = new News(req.body);
@@ -78,7 +80,7 @@ router.route('/addtag/').post((req, res) => {
             const result = await newsapi.v2.everything({
                 q: tag,
                 pageSize: 100,
-                excludeDomains: 'reuters.com',
+                excludeDomains: 'reuters.com, Knowyourmeme.com',
                 language: 'en'
             })
 
