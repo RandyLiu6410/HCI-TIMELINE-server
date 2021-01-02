@@ -104,28 +104,28 @@ router.route('/followtags').get((req, res) => {
 router.route('/followtags').delete((req, res) => {
     User.findOne({username: req.query.username})
     .then((result) => {
-        if(req.query.customtag)
-        {
-            if(result.customtags.filter(tag => tag.tag === req.query.tag).length === 0) {
-                res.status(400);
-                res.json('Tag does not exist.');
-            }
-            else {
-                User.update(
-                    { _id: result._id }, 
-                    { $pull: { customtags: {
-                        tag: req.query.tag,
-                    } } },
-                    {safe: true, multi: true},
-                    () => {
-                        res.status(200);
-                        res.json('Tag is deleted.');
-                    }
-                );
-            }
-        }
-        else
-        {
+        // if(req.query.customtag)
+        // {
+        //     if(result.customtags.filter(tag => tag.tag === req.query.tag).length === 0) {
+        //         res.status(400);
+        //         res.json('Tag does not exist.');
+        //     }
+        //     else {
+        //         User.update(
+        //             { _id: result._id }, 
+        //             { $pull: { customtags: {
+        //                 tag: req.query.tag,
+        //             } } },
+        //             {safe: true, multi: true},
+        //             () => {
+        //                 res.status(200);
+        //                 res.json('Tag is deleted.');
+        //             }
+        //         );
+        //     }
+        // }
+        // else
+        // {
             if(result.followtags.filter(tag => tag.tag === req.query.tag).length === 0) {
                 res.status(400);
                 res.json('Tag does not exist.');
@@ -143,7 +143,7 @@ router.route('/followtags').delete((req, res) => {
                     }
                 );
             }
-        }
+        // }
     })
     .catch((err) => {
         res.status(400);
@@ -178,45 +178,45 @@ router.route('/checkfollow').get((req, res) => {
     }
 });
 
-router.route('/customtags').post((req, res) => {
-    User.findOne({username: req.query.username})
-    .then((result) => {
-        if(result.customtags.filter(tag => tag.tag === req.query.tag).length === 0)
-        {
-            User.update(
-                { _id: result._id }, 
-                { $push: { customtags: {
-                    tag: req.query.tag,
-                    followtime: new Date()
-                } } },
-                () => {
-                    res.status(200);
-                    res.json('Tag is added.');
-                }
-            );
-        }
-        else{
-            res.status(200);
-            res.json('Tag is added.');
-        }
-    })
-    .catch((err) => {
-        res.status(400);
-        res.json(err);
-    })
-});
+// router.route('/customtags').post((req, res) => {
+//     User.findOne({username: req.query.username})
+//     .then((result) => {
+//         if(result.customtags.filter(tag => tag.tag === req.query.tag).length === 0)
+//         {
+//             User.update(
+//                 { _id: result._id }, 
+//                 { $push: { customtags: {
+//                     tag: req.query.tag,
+//                     followtime: new Date()
+//                 } } },
+//                 () => {
+//                     res.status(200);
+//                     res.json('Tag is added.');
+//                 }
+//             );
+//         }
+//         else{
+//             res.status(200);
+//             res.json('Tag is added.');
+//         }
+//     })
+//     .catch((err) => {
+//         res.status(400);
+//         res.json(err);
+//     })
+// });
 
-router.route('/customtags').get((req, res) => {
-    User.findOne({username: req.query.username})
-    .then((result) => {
-        res.status(200);
-        res.json(result.customtags);
-    })
-    .catch((err) => {
-        res.status(400);
-        res.json(err);
-    })
-});
+// router.route('/customtags').get((req, res) => {
+//     User.findOne({username: req.query.username})
+//     .then((result) => {
+//         res.status(200);
+//         res.json(result.customtags);
+//     })
+//     .catch((err) => {
+//         res.status(400);
+//         res.json(err);
+//     })
+// });
 
 router.route('/history').post((req, res) => {
     User.findOne({username: req.query.username})
